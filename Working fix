@@ -1,11 +1,14 @@
 $('.slick-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
-  // Always disable iframe pointer events before slide changes
+  // Always disable iframe interaction before starting a slide change
   $('.vimeo-slide iframe').css('pointer-events', 'none');
 });
 
 $('.slick-slider').on('afterChange', function(event, slick, currentSlide) {
-  // Enable pointer events ONLY when on the 3rd slide
+  // Enable iframe only when you're on the third slide (index 2)
   if (currentSlide === 2) {
-    $('.vimeo-slide iframe').css('pointer-events', 'auto');
+    // Add a slight delay to ensure swipe event completes cleanly
+    setTimeout(() => {
+      $('.vimeo-slide iframe').css('pointer-events', 'auto');
+    }, 300); // Adjust delay as needed (100–300ms is usually safe)
   }
 });
