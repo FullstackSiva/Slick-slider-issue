@@ -1,11 +1,11 @@
-let isDragging = false;
+$('.slick-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+  // Disable iframe interaction before slide changes
+  $('.vimeo-slide iframe').css('pointer-events', 'none');
+});
 
-$('.wmg-pov-slider')
-  .on('beforeChange', function () {
-    isDragging = true;
-    $('#wmg-pov-video-frame').css('pointer-events', 'none');
-  })
-  .on('afterChange', function () {
-    isDragging = false;
-    $('#wmg-pov-video-frame').css('pointer-events', 'auto');
-  });
+$('.slick-slider').on('afterChange', function(event, slick, currentSlide) {
+  // Enable iframe interaction only if on 3rd slide
+  if (currentSlide === 2) {
+    $('.vimeo-slide iframe').css('pointer-events', 'auto');
+  }
+});
