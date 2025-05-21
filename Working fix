@@ -1,21 +1,10 @@
 $('.slick-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
-  // If currently on the 3rd slide (index 2) and sliding away
-  if (currentSlide === 2 && nextSlide !== 2) {
-    // Momentarily allow pointer events
-    $('.vimeo-slide iframe').css('pointer-events', 'auto');
-
-    // Use setTimeout to immediately disable it again
-    setTimeout(function() {
-      $('.vimeo-slide iframe').css('pointer-events', 'none');
-    }, 0); // Almost instant
-  } else {
-    // For all other cases, keep pointer events off
-    $('.vimeo-slide iframe').css('pointer-events', 'none');
-  }
+  // Always disable iframe pointer events before slide changes
+  $('.vimeo-slide iframe').css('pointer-events', 'none');
 });
 
 $('.slick-slider').on('afterChange', function(event, slick, currentSlide) {
-  // Enable pointer events only if on 3rd slide
+  // Enable pointer events ONLY when on the 3rd slide
   if (currentSlide === 2) {
     $('.vimeo-slide iframe').css('pointer-events', 'auto');
   }
