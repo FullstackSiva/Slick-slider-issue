@@ -1,14 +1,24 @@
+// Initialize Vimeo Player
+const iframe = document.querySelector('#vimeo-player');
+const vimeoPlayer = new Vimeo.Player(iframe);
+
+// Slick Event Handling
 $('.slick-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
-  // Always disable iframe interaction before starting a slide change
-  $('.vimeo-slide iframe').css('pointer-events', 'none');
+  // Disable iframe interaction for sliding to work
+  $('#vimeo-player').css('pointer-events', 'none');
+
+  // Pause the video when leaving slide 2
+  if (currentSlide === 2) {
+    vimeoPlayer.pause().catch(() => {});
+  }
 });
 
 $('.slick-slider').on('afterChange', function(event, slick, currentSlide) {
-  // Enable iframe only when you're on the third slide (index 2)
+  // On slide 2, play the video and enable interaction after small delay
   if (currentSlide === 2) {
-    // Add a slight delay to ensure swipe event completes cleanly
+    vimeoPlayer.play().catch(() => {});
     setTimeout(() => {
-      $('.vimeo-slide iframe').css('pointer-events', 'auto');
-    }, 300); // Adjust delay as needed (100–300ms is usually safe)
+      $('#vimeo-player').css('pointer-events', 'auto');
+    }, 300);
   }
 });
