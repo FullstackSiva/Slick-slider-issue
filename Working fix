@@ -1,12 +1,11 @@
 $(document).ready(function () {
-  const $slider = $('.wmg-pov-slider');
   const $iframe = $('#wmg-pov-video-frame');
 
-  $slider.on('mousedown touchstart', function () {
-    $iframe.css('pointer-events', 'none');
-  });
-
-  $(document).on('mouseup touchend', function () {
-    $iframe.css('pointer-events', 'auto');
-  });
+  $('.wmg-pov-slider')
+    .on('mousedown touchstart', function () {
+      $iframe.css('pointer-events', 'none'); // Prevent iframe from blocking drag
+    })
+    .on('mouseup touchend', function () {
+      $iframe.css('pointer-events', 'auto'); // Re-enable after drag
+    });
 });
