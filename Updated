@@ -1,0 +1,77 @@
+<!-- Video Wrapper -->
+<div class="wmg-pov-video">
+  <iframe
+    id="wmg-pov-video-frame"
+    src="https://player.vimeo.com/video/946422914?h=4ad350e64a&autoplay=1&loop=1&muted=1&title=0&byline=0&portrait=0"
+    frameborder="0"
+    allow="autoplay; fullscreen"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<!-- Disclaimer Trigger -->
+<div class="wmg-pov-disclaimer" tabindex="0" role="button" aria-label="Open Legal Disclaimer">Legal Disclaimer</div>
+
+<!-- Disclaimer Popup -->
+<div class="wmg-pov-disclaimer-popup" role="dialog" aria-modal="true" aria-labelledby="disclaimerTitle" style="display: none;">
+  <h4 id="disclaimerTitle">Legal Disclaimer</h4>
+  <div class="wmg-pov-disclaimer-text" tabindex="0">
+    The characters in this video are fictional. Any resemblance to real people is purely coincidental.
+  </div>
+  <span class="wmg-pov-disclaimer-close" role="button" tabindex="0" aria-label="Close Disclaimer">X</span>
+</div>
+
+<!-- Slider Wrapper -->
+<div class="wmg-pov-slider">
+  <!-- slides go here -->
+</div>
+
+<!-- Play/Pause Control -->
+<div class="wmg-pov-controls" tabindex="0" role="button" aria-label="Pause"></div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+  $(document).ready(function () {
+    // Vimeo video instance
+    var vimeoPlayer = new Vimeo.Player($('#wmg-pov-video-frame')[0]);
+
+    // Show disclaimer popup and pause video
+    $('.wmg-pov-disclaimer').on('click keydown', function (e) {
+      if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+        $('.wmg-pov-disclaimer-popup').fadeIn();
+        vimeoPlayer.pause();
+      }
+    });
+
+    // Close disclaimer popup
+    $('.wmg-pov-disclaimer-close').on('click keydown', function (e) {
+      if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+        $('.wmg-pov-disclaimer-popup').fadeOut();
+      }
+    });
+
+    // Slider play/pause toggle with ARIA support
+    $('.wmg-pov-controls').on('click keydown', function (e) {
+      if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+        var $this = $(this);
+        var $slider = $('.wmg-pov-slider');
+
+        if ($this.hasClass('wmg-paused')) {
+          $slider.slick('slickPlay');
+          $this.removeClass('wmg-paused').attr('aria-label', 'Pause');
+        } else {
+          $slider.slick('slickPause');
+          $this.addClass('wmg-paused').attr('aria-label', 'Play');
+        }
+      }
+    });
+
+    // Track current slide index
+    $('.wmg-pov-slider').on('afterChange', function (event, slick, currentSlide) {
+      console.log('Current slide:', currentSlide);
+      // Add tracking logic here if needed
+    });
+  });
+</script>
