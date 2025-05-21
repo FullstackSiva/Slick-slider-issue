@@ -1,11 +1,11 @@
-$(document).ready(function () {
-  const $iframe = $('#wmg-pov-video-frame');
+let isDragging = false;
 
-  $('.wmg-pov-slider')
-    .on('mousedown touchstart', function () {
-      $iframe.css('pointer-events', 'none'); // Prevent iframe from blocking drag
-    })
-    .on('mouseup touchend', function () {
-      $iframe.css('pointer-events', 'auto'); // Re-enable after drag
-    });
-});
+$('.wmg-pov-slider')
+  .on('beforeChange', function () {
+    isDragging = true;
+    $('#wmg-pov-video-frame').css('pointer-events', 'none');
+  })
+  .on('afterChange', function () {
+    isDragging = false;
+    $('#wmg-pov-video-frame').css('pointer-events', 'auto');
+  });
