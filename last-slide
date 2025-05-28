@@ -1,0 +1,11 @@
+$('.your-slider').on('afterChange', function(event, slick, currentSlide) {
+  const $slider = $(this);
+  const $slides = $slider.find('.slick-slide');
+  const lastVisibleSlide = slick.slideCount - 1;
+
+  if (currentSlide >= lastVisibleSlide) {
+    $slider.addClass('last-slide-full');
+  } else {
+    $slider.removeClass('last-slide-full');
+  }
+});
