@@ -1,33 +1,30 @@
-$(document).ready(function () {
-  let vimeoPlayer; // Global reference
-
-  $('.slick-slider').slick({
-    autoplay: true,
-    autoplaySpeed: 5000,
-    arrows: true,
-    dots: true,
-  });
-
-  // Remove iframe when leaving slide 3
-  $('.slick-slider').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
-    if (currentSlide === 2) {
-      $('#vimeo-container').empty();
-      vimeoPlayer = null;
+<script>
+  $(document).ready(function () {
+    function initializeSlickIfMobile() {
+      if ($(window).width() < 767) {
+        if (!$('.my-slider').hasClass('slick-initialized')) {
+          $('.my-slider').slick({
+            dots: true,
+            arrows: false,
+            infinite: true,
+            speed: 300,
+            slidesToShow: 1,
+            adaptiveHeight: true
+          });
+        }
+      } else {
+        if ($('.my-slider').hasClass('slick-initialized')) {
+          $('.my-slider').slick('unslick');
+        }
+      }
     }
-  });
 
-  // Add iframe when entering slide 3
-  $('.slick-slider').on('afterChange', function (event, slick, currentSlide) {
-    if (currentSlide === 2) {
-      $('#vimeo-container').html(`
-        <iframe id="vimeo-player"
-          src="https://player.vimeo.com/video/76979871?autoplay=1&muted=1"
-          frameborder="0"
-          allow="autoplay; fullscreen"
-          allowfullscreen
-          width="100%" height="100%">
-        </iframe>
-      `);
-    }
+    // Run on load
+    initializeSlickIfMobile();
+
+    // Run on resize
+    $(window).on('resize', function () {
+      initializeSlickIfMobile();
+    });
   });
-});
+</script>
